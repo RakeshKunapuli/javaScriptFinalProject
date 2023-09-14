@@ -10,6 +10,7 @@ $(document).ready(function () {
 
     var clothingElement = document.getElementById("clothing-items");
     var accessory = document.getElementById("accessories-item");
+    var cartCountElement = document.getElementById("cart-count")
 
     $.get("https://5d76bf96515d1a0014085cf9.mockapi.io/product", function (response) {
         var data = response;
@@ -47,17 +48,55 @@ $(document).ready(function () {
         window.location.href=`details.html?productId=${productId}`
 
  })
- var totalitems = 0
-$(document).ready(function() {
-    var cartItems = window.localStorage.getItem('product-list');
-    cartItems = cartItems === null || cartItems === '' ? [] : cartItems;
-    cartItems = cartItems.length > 0 ? JSON.parse(cartItems) : [];
+ function addToCart() {
+    var Obj = {
+        productprice: productData.price,
+        productname: productData.name,
+        productpreview: productData.preview
+    };
 
-    var totalCount = 0;
-    for(var i=0; i<cartItems.length; i++) {
-        totalCount = totalCount + cartItems[i].count;
+    cartItems.push(Obj);
+    updateCartCount();
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    alert("Item added to cart");
+}
+
+function updateCartCount() {
+    var totalItemsInCart = cartItems.length;
+    cartCountElement.textContent = totalItemsInCart;
+}
+})
+
+
+$(document).on("click", '.product-card', function () {
+    var productId = $(this).attr("id");
+    window.location.href = `details.html?productId=${productId}`;
+});
+
+// Load cart items from local storage and update cart count
+var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+updateCartCount();
+
+// Function to add items to the cart
+function addToCart(productData) {
+    var Obj = {
+        productprice: productData.price,
+        productname: productData.name,
+        productpreview: productData.preview
+    };
+
+    cartItems.push(Obj);
+    updateCartCount();
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    
+}
+function updateCartCount() {
+    var totalItemsInCart = cartItems.length;
+
+    if (totalItemsInCart > 0) {
+        cartCountElement.innerText = totalItemsInCart;
+    } else {
+        cartCountElement.innerText = "0";
     }
-
-    $('#cart-count').html(totalCount);
-})
-})
+}
+;

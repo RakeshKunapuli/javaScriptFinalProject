@@ -1,12 +1,10 @@
 
     var productId = new URLSearchParams(location.search).get("productId");
+var imageElement = document.getElementById("image");
+var detailsElement = document.getElementById("details");
+var cartCountElement = document.getElementById("cart-count"); // Get the cart count element
 
-    var imageElement = document.getElementById("image");
-        var detailsElement = document.getElementById("details");
-        var cart = document.getElementById("cart-count")
-
-    // Make an AJAX request to fetch product details
-    $.get(`https://5d76bf96515d1a0014085cf9.mockapi.io/product/${productId}`, function (response) {
+$.get(`https://5d76bf96515d1a0014085cf9.mockapi.io/product/${productId}`, function (response) {
         var productData = response;
         
         // Create and append the main product image
@@ -71,12 +69,6 @@
         }
         detailsElement.appendChild(imagesDiv);
 
-        var buttonElement=document.createElement("button")
-        buttonElement.id="btn-add-to-cart"
-        // buttonElement.setAttribute("onclick","addToCart()")
-        buttonElement.innerText="Add to Cart"
-        detailsElement.appendChild(buttonElement)
-
         function activeClass(num) {
             const previousCard = document.getElementsByClassName("active")[0];
             previousCard.classList.remove("active");
@@ -87,38 +79,80 @@
             const mainImg = document.getElementById("mainImg");
             mainImg.src = productData.photos[num];
         }
-    
-
-
-
-var productContainer = document.getElementById("container")
- var cartButton = document.getElementById("btn-add-to-cart");
 
 var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 
+// Update cart count on page load
+updateCartCount();
+
+var buttonElement = document.createElement("button")
+buttonElement.id = "btn-add-to-cart";
+buttonElement.innerText = "Add to Cart";
+detailsElement.appendChild(buttonElement);
+
 buttonElement.addEventListener("click", addToCart);
+
 function addToCart() {
     var Obj = {
         productprice: productData.price,
         productname: productData.name,
         productpreview: productData.preview
     };
+
     cartItems.push(Obj);
+    updateCartCount();
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    alert("Item added to cart");
+    alert("Yay..!! Item Added To The Cart");
 }
 
-var totalitems = 0
-$(document).ready(function() {
-    var cartItems = window.localStorage.getItem('product-list');
-    cartItems = cartItems === null || cartItems === '' ? [] : cartItems;
-    cartItems = cartItems.length > 0 ? JSON.parse(cartItems) : [];
+function updateCartCount() {
+    var totalItemsInCart = cartItems.length;
+    cartCountElement.textContent = totalItemsInCart;
+}
 
-    var totalCount = 0;
-    for(var i=0; i<cartItems.length; i++) {
-        totalCount = totalCount + cartItems[i].count;
-    }
-
-    $('#cart-count').html(totalCount);
 })
-    })
+
+
+
+//     var productId = new URLSearchParams(location.search).get("productId");
+
+//     var imageElement = document.getElementById("image");
+//         var detailsElement = document.getElementById("details");
+//         var cart = document.getElementById("cart-count")
+
+//     // Make an AJAX request to fetch product details
+    
+    
+
+
+
+// var productContainer = document.getElementById("container")
+//  var cartButton = document.getElementById("btn-add-to-cart");
+
+// var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+// buttonElement.addEventListener("click", addToCart);
+// function addToCart() {
+//     var Obj = {
+//         productprice: productData.price,
+//         productname: productData.name,
+//         productpreview: productData.preview
+//     };
+//     cartItems.push(Obj);
+//     localStorage.setItem("cartItems", JSON.stringify(cartItems));
+//     alert("Item added to cart");
+// }
+
+// var totalitems = 0
+// $(document).ready(function() {
+//     var cartItems = window.localStorage.getItem('product-list');
+//     cartItems = cartItems === null || cartItems === '' ? [] : cartItems;
+//     cartItems = cartItems.length > 0 ? JSON.parse(cartItems) : [];
+
+//     var totalCount = 0;
+//     for(var i=0; i<cartItems.length; i++) {
+//         totalCount = totalCount + cartItems[i].count;
+//     }
+
+//     $('#cart-count').html(totalCount);
+// })
