@@ -6,7 +6,7 @@
   .owl-stage{
     height: 30%;
   }
-  .owl-carousel {
+   .owl-carousel {
     height: 300px;
   }
   .owl-theme .owl-nav.disabled + .owl-dots {

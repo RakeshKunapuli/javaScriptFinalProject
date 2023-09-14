@@ -85,7 +85,7 @@ var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 // Update cart count on page load
 updateCartCount();
 
-var buttonElement = document.createElement("button")
+ var buttonElement = document.createElement("button")
 buttonElement.id = "btn-add-to-cart";
 buttonElement.innerText = "Add to Cart";
 detailsElement.appendChild(buttonElement);

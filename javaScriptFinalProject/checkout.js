@@ -3,7 +3,7 @@ var cartproductitems = document.getElementsByClassName("cart-product-item");
 var grandTotal = document.getElementById("grand-total")
 
 
-var cartItems = JSON.parse(localStorage.getItem("cartItems"));
+ var cartItems = JSON.parse(localStorage.getItem("cartItems"));
 var totalPrice = 0;
 for (var i = 0; i < cartItems.length; i++) {
     var cartItem = cartItems[i];

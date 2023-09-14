@@ -10,7 +10,7 @@ $(document).ready(function () {
 
     var clothingElement = document.getElementById("clothing-items");
     var accessory = document.getElementById("accessories-item");
-    var cartCountElement = document.getElementById("cart-count")
+     var cartCountElement = document.getElementById("cart-count")
 
     $.get("https://5d76bf96515d1a0014085cf9.mockapi.io/product", function (response) {
         var data = response;
