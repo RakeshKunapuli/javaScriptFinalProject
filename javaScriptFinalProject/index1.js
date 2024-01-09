@@ -11,6 +11,8 @@ $(document).ready(function () {
     var clothingElement = document.getElementById("clothing-items");
     var accessory = document.getElementById("accessories-item");
      var cartCountElement = document.getElementById("cart-count")
+     let cartItems = JSON.parse(localStorage.getItem('cartItems')) || []
+     updateCartCount();
 
     $.get("https://5d76bf96515d1a0014085cf9.mockapi.io/product", function (response) {
         var data = response;
@@ -48,6 +50,9 @@ $(document).ready(function () {
         window.location.href=`details.html?productId=${productId}`
 
  })
+
+ 
+
  function addToCart() {
     var Obj = {
         productprice: productData.price,
@@ -56,7 +61,7 @@ $(document).ready(function () {
     };
 
     cartItems.push(Obj);
-    updateCartCount();
+    
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     alert("Item added to cart");
 }
